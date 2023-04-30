@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
-import AddPhoto from '../../components/addPhoto';
+import AddPhoto from '../../../components/addPhoto';
 import styles from './styles.style';
 
 const PersonalRegisterScreen = ({ navigation }) => {
