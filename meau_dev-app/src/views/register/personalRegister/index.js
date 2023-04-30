@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
 import AddPhoto from '../../../components/addPhoto';
+import { addUser, getUsers } from '../../../../dao/user'
+
 import styles from './styles.style';
 
 const PersonalRegisterScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
+  const [age, setAge] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [city, setCity] = useState('');
@@ -13,16 +16,18 @@ const PersonalRegisterScreen = ({ navigation }) => {
   const [address, setAddress] = useState('');
   const [state, setState] = useState('');
 
+  const [user, setUser] = useState({});
+
   const handleRegister = () => {
     checkAuth();
-    console.log(username);
-    console.log(password);
+    console.log('geere');
+    // addUser(name, age, email);
+    getUsers();
   };
 
   const checkAuth = () => {
     // check future headers
-    console.log('pressed')
-    // navigate('Cadastro'); // <- navigation to Main screen
+    console.log('pressed');
   };
 
   return (
@@ -41,49 +46,42 @@ const PersonalRegisterScreen = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Idade"
-          secureTextEntry={true}
-          value={password}
-          onChangeText={setPassword}
+          value={age}
+          onChangeText={setAge}
         />
         <TextInput
           style={styles.input}
           placeholder="Email"
-          secureTextEntry={true}
           value={email}
           onChangeText={setEmail}
         />
         <TextInput
           style={styles.input}
           placeholder="Estado"
-          secureTextEntry={true}
           value={state}
           onChangeText={setState}
         />
         <TextInput
           style={styles.input}
           placeholder="Cidade"
-          secureTextEntry={true}
           value={city}
           onChangeText={setCity}
         />
         <TextInput
           style={styles.input}
           placeholder="Endereço"
-          secureTextEntry={true}
           value={address}
           onChangeText={setAddress}
         />
         <TextInput
           style={styles.input}
           placeholder="Numero"
-          secureTextEntry={true}
           value={phone}
           onChangeText={setPhone}
         />
         <TextInput
           style={styles.input}
           placeholder="Nome de Usuário"
-          secureTextEntry={true}
           value={username}
           onChangeText={setUsername}
         />
@@ -104,7 +102,8 @@ const PersonalRegisterScreen = ({ navigation }) => {
         <Text style={styles.registerTitle}>Foto de perfil</Text>
         <AddPhoto></AddPhoto>
         {/* <Button needAuth="true" text="Fazer Cadastro" type="greenButton" /> */}
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Cadastro')} >
+        <TouchableOpacity style={styles.button} 
+        onPress={() => {handleRegister(), navigation.navigate('Cadastro')}} >
           <Text style={styles.buttonText} >Fazer Cadastro </Text>
         </TouchableOpacity>
       </ScrollView>
