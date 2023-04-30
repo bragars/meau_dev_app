@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './src/views/register/login';
-import PersonalRegisterScreen from './src/views/personalRegister';
+import PersonalRegisterScreen from './src/views/register/personalRegister';
 import NotAuthErrorScreen from './src/views/notAuthErrorScreen';
 import { useFonts } from 'expo-font';
 import AnimalRegisterScreen from './src/views/register/animalRegister';
