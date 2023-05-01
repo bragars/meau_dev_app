@@ -2,22 +2,54 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login({ navigation }) {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorLogin, setErrorLogin] = useState('');
+
+  const loginFireBase = () => {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log("email cadastrado", user.email)
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage)
+        // ..
+      });
+  }
 
   const handleLogin = () => {
-    console.log(username);
+    console.log(email);
     console.log(password);
   };
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <TextInput placeholder='Nome de Usuário' style={styles.textInput} />
-      <TextInput placeholder='Senha' secureTextEntry={true} style={styles.textInput} />
-      <TouchableOpacity style={styles.entrar} onPress={() => { handleLogin(), navigation.navigate('Cadastro Pessoal') }} >
+      <TextInput
+        placeholder='Email'
+        style={styles.textInput}
+        type="text"
+        onChangeText={text => setEmail(text)}
+        value={email}
+      />
+      <TextInput
+        placeholder='Senha'
+        secureTextEntry={true}
+        style={styles.textInput}
+        onChangeText={text => setPassword(text)}
+        value={password} />
+      <TouchableOpacity
+        style={styles.entrar}
+        onPress={loginFireBase}
+      >
         <Text style={{ color: '#434343', textAlign: 'center', fontSize: 10 }} >ENTRAR </Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.facebook}>
