@@ -26,7 +26,7 @@ export default styles = StyleSheet.create({
     width: '35%',
     justifyContent: 'center',
     alignSelf: 'center',
-    borderRadius:3,
+    borderRadius: 3,
     height: 50,
     backgroundColor: '#88c9bf',
     marginEnd: 10,
@@ -40,7 +40,7 @@ export default styles = StyleSheet.create({
     width: '70%',
     justifyContent: 'center',
     alignSelf: 'center',
-    borderRadius:3,
+    borderRadius: 3,
     height: 50,
     backgroundColor: '#88c9bf',
     marginEnd: 10,
@@ -71,5 +71,15 @@ export default styles = StyleSheet.create({
   },
   bold: {
     fontWeight: 'bold',
+  },
+  space: {
+    marginBottom: 10
+  },
+  row: {
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  margin: {
+    marginStart: -15
   }
 });
