@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
+import { create as createUser } from '../../../../services/user';
 import AddPhoto from '../../../components/addPhoto';
-import { addUser, getUsers } from '../../../../dao/user'
 
 import styles from './styles.style';
 
@@ -15,19 +15,25 @@ const PersonalRegisterScreen = ({ navigation }) => {
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [state, setState] = useState('');
-
   const [user, setUser] = useState({});
 
   const handleRegister = () => {
-    checkAuth();
-    console.log('geere');
-    // addUser(name, age, email);
-    getUsers();
+    setUserFields();
+    createUser(user);
   };
 
-  const checkAuth = () => {
-    // check future headers
-    console.log('pressed');
+  const setUserFields = () => {
+    setUser({
+      name: name,
+      username: username, 
+      age: age, 
+      password: password,
+      email: email,
+      city: city,
+      phone: phone,
+      address: address,
+      state: state,
+    });
   };
 
   return (

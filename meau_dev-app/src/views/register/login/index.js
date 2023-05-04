@@ -48,7 +48,7 @@ export default function Login({ navigation }) {
         value={password} />
       <TouchableOpacity
         style={styles.entrar}
-        onPress={loginFireBase}
+        onPress={() => {loginFireBase, navigation.navigate('Cadastro Pessoal')}}
       >
         <Text style={{ color: '#434343', textAlign: 'center', fontSize: 10 }} >ENTRAR </Text>
       </TouchableOpacity>

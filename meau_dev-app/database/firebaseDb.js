@@ -2,12 +2,13 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD5hDApZn8S8ICnmD-lU3ozDxbKIxSxy1Y",
-  authDomain: "meau-dev.firebaseapp.com",
-  projectId: "meau-dev",
-  storageBucket: "meau-dev.appspot.com",
-  messagingSenderId: "979320890263",
-  appId: "1:979320890263:web:c1143b6ace977c035cdad2"
+  apiKey: "AIzaSyD1v1d-8UQG3m1JMPP1nzYxqCrhPOjofQA",
+  authDomain: "meau-dev-app.firebaseapp.com",
+  projectId: "meau-dev-app",
+  storageBucket: "meau-dev-app.appspot.com",
+  messagingSenderId: "1057731607853",
+  appId: "1:1057731607853:web:6be692328d3d523d51e7a4",
+  measurementId: "G-5KJ460VHD2"
 };
 
 const app = initializeApp(firebaseConfig);
