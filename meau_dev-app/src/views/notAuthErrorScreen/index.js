@@ -9,7 +9,7 @@ const NotAuthErrorScreen = ({ navigation }) => {
         Ops !
       </Text>
       <Text style={styles.defaultText}>Você não pode realizar esta ação sem possuir um cadastro.</Text>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')} >
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Cadastro Pessoal')} >
           <Text style={styles.buttonText} >Fazer Cadastro </Text>
         </TouchableOpacity>
       <Text style={styles.defaultText}>Já possui cadastro?.</Text>
