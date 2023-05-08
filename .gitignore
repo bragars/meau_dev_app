@@ -1,4 +1,3 @@
 meau_dev-app/.expo
 meau_dev-app/database/firebaseDb.js
-node_modules
-.expo
+meau_dev-app/node_modules/*
