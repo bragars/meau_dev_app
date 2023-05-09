@@ -48,7 +48,6 @@ const AnimalRegisterScreen = ({ navigation }) => {
     };
 
     const setAnimalFields = () => {
-        console.log(name);
         setAnimal({
             name: name,
             specie: specie,

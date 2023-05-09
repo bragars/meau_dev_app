@@ -1,7 +1,6 @@
 import { addAnimal, getAnimal, getAnimals, removeAnimal, updateAnimal } from '../dao/animal';
 
 export const create = (name, age, email) => {
-  console.log("asas");
   addAnimal(name, age, email);
 };
 
