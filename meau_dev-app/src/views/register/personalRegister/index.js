@@ -18,8 +18,11 @@ const PersonalRegisterScreen = ({ navigation }) => {
   const [user, setUser] = useState({});
 
   const handleRegister = () => {
+    console.log("handle");
     setUserFields();
+    console.log("handle2");
     createUser(user);
+    console.log("handle3");
   };
 
   const setUserFields = () => {
@@ -109,7 +112,7 @@ const PersonalRegisterScreen = ({ navigation }) => {
         <AddPhoto onPress={() => openImagePicker()}></AddPhoto>
         {/* <Button needAuth="true" text="Fazer Cadastro" type="greenButton" /> */}
         <TouchableOpacity style={styles.button}
-          onPress={() => {handleRegister(), navigation.navigate('Cadastro')}} >
+          onPress={() => handleRegister()} >
           <Text style={styles.buttonText} >Fazer Cadastro </Text>
         </TouchableOpacity>
       </ScrollView>
