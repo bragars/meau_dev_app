@@ -2,37 +2,46 @@ import React, { useState } from 'react';
 import { Text, TextInput, View, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
 import { RadioButton, Checkbox } from 'react-native-paper'
 import styles from './styles.style';
+import { create as createAnimal } from '../../../../services/animal';
 
 const AnimalRegisterScreen = ({ navigation }) => {
-    const [name, setName] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [city, setCity] = useState('');
-    const [phone, setPhone] = useState('');
-    const [address, setAddress] = useState('');
-    const [state, setState] = useState('');
-
+    const [checked1, setChecked1]   = useState(false);
+    const [checked2, setChecked2]   = useState(false);
+    const [checked3, setChecked3]   = useState(false);
+    const [checked4, setChecked4]   = useState(false);
+    const [checked5, setChecked5]   = useState(false);
+    const [checked6, setChecked6]   = useState(false);
+    const [checked7, setChecked7]   = useState(false);
+    const [checked8, setChecked8]   = useState(false);
+    const [checked9, setChecked9]   = useState(false);
+    const [checked10, setChecked10] = useState(false);
+    const [specie, setSpecie]       = useState('');
+    const [gender, setGender]       = useState('');
+    const [animal, setAnimal]       = useState('');
+    const [name, setName]           = useState('');
+    const [size, setSize]           = useState('');
+    const [age, setAge]             = useState('');
+    
     const handleRegister = () => {
         checkAuth();
-        console.log(username);
-        console.log(password);
+        setAnimalFields();
+        createAnimal(animal);
     };
 
     const checkAuth = () => {
-        // check future headers
         console.log('pressed')
         // navigate('Cadastro'); // <- navigation to Main screen
     };
 
-    const [especie, setEspecie] = useState('');
-    const [sexo, setSexo] = useState('');
-
-    const [checked1, setChecked1] = useState(false);
-    const [checked2, setChecked2] = useState(false);
-    const [checked3, setChecked3] = useState(false);
-    const [checked4, setChecked4] = useState(false);
-    const [checked5, setChecked5] = useState(false);
+    const setAnimalFields = () => {
+        setAnimal({
+            name: name,
+            specie: specie,
+            gender: gender,
+            size: size,
+            age: age,
+        });
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -55,21 +64,21 @@ const AnimalRegisterScreen = ({ navigation }) => {
                 />
                 <Text>Fotos do animal</Text>
                 <AddPhoto></AddPhoto>
-                <RadioButton.Group onValueChange={newEspecie => setEspecie(newEspecie)} value={especie}>
+                <RadioButton.Group onValueChange={specie => setSpecie(specie)} value={specie}>
                     <Text>Espécie</Text>
                     <View style={styles.row}>
                         <RadioButton.Item label="Cachorro" value="first" style={styles.margin} />
                         <RadioButton.Item label="Gato" value="second" style={styles.margin} />
                     </View>
                 </RadioButton.Group>
-                <RadioButton.Group onValueChange={newEspecie => setEspecie(newEspecie)} value={especie}>
+                <RadioButton.Group onValueChange={gender => setGender(gender)} value={gender}>
                     <Text>Sexo</Text>
                     <View style={styles.row}>
                         <RadioButton.Item label="Macho" value="first" style={styles.margin} />
                         <RadioButton.Item label="Fêmea" value="second" style={styles.margin} />
                     </View>
                 </RadioButton.Group>
-                <RadioButton.Group onValueChange={newEspecie => setEspecie(newEspecie)} value={especie}>
+                <RadioButton.Group onValueChange={size => setSize(size)} value={size}>
                     <Text>Porte</Text>
                     <View style={styles.row}>
                         <RadioButton.Item label="Pequeno" value="first" style={styles.margin} />
@@ -77,10 +86,10 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         <RadioButton.Item label="Grande" value="second" style={styles.margin} />
                     </View>
                 </RadioButton.Group>
-                <RadioButton.Group onValueChange={newEspecie => setEspecie(newEspecie)} value={especie}>
+                <RadioButton.Group onValueChange={age => setAge(setAge)} value={age}>
                     <Text>Idade</Text>
                     <View style={styles.row}>
-                        <RadioButton.Item label="Filhore" value="first" style={styles.margin} />
+                        <RadioButton.Item label="Filhote" value="first" style={styles.margin} />
                         <RadioButton.Item label="Adulto" value="second" style={styles.margin} />
                         <RadioButton.Item label="Idoso" value="second" style={styles.margin} />
                     </View>
@@ -88,7 +97,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                 <Text>Temperamento</Text>
                 <View style={styles.row}>
                     <Checkbox.Item
-                        label='Brincalão'
+                        label='Brincalhão'
                         status={checked1 ? 'checked' : 'unchecked'}
                         onPress={() => setChecked1(!checked1)}
                         style={styles.margin}
@@ -107,45 +116,45 @@ const AnimalRegisterScreen = ({ navigation }) => {
                 <View style={styles.row}>
                     <Checkbox.Item
                         label='Guarda'
-                        status={checked1 ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked1(!checked1)}
+                        status={checked4 ? 'checked' : 'unchecked'}
+                        onPress={() => setChecked4(!checked4)}
                         style={styles.margin}
                     />
                     <Checkbox.Item
                         label='Amoroso'
-                        status={checked2 ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked2(!checked2)}
+                        status={checked5 ? 'checked' : 'unchecked'}
+                        onPress={() => setChecked5(!checked5)}
                     />
                     <Checkbox.Item
                         label='Preguiçoso'
-                        status={checked3 ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked3(!checked3)}
+                        status={checked6 ? 'checked' : 'unchecked'}
+                        onPress={() => setChecked6(!checked6)}
                     />
                 </View>
                 <Text>Saúde</Text>
                 <View style={styles.row}>
                     <Checkbox.Item
                         label='Vacinado'
-                        status={checked1 ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked1(!checked1)}
+                        status={checked7 ? 'checked' : 'unchecked'}
+                        onPress={() => setChecked7(!checked7)}
                         style={styles.margin}
                     />
                     <Checkbox.Item
                         label='Vermifugado'
-                        status={checked2 ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked2(!checked2)}
+                        status={checked8 ? 'checked' : 'unchecked'}
+                        onPress={() => setChecked8(!checked8)}
                     />
                 </View>
                 <View style={styles.row}>
                     <Checkbox.Item
                         label='Castrado'
-                        status={checked3 ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked3(!checked3)}
+                        status={checked9 ? 'checked' : 'unchecked'}
+                        onPress={() => setChecked9(!checked9)}
                     />
                     <Checkbox.Item
                         label='Doente'
-                        status={checked3 ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked3(!checked3)}
+                        status={checked10 ? 'checked' : 'unchecked'}
+                        onPress={() => setChecked10(!checked10)}
                     />
                 </View>
                 <Text>Doenças do animal</Text>

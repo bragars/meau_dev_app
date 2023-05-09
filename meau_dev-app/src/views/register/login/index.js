@@ -3,32 +3,29 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+// import { connect } from 'react-redux';
+// import { changeCount } from './actions/counts';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorLogin, setErrorLogin] = useState('');
+  const [errorLogin, setErrorLogin] = useState({});
 
   const loginFireBase = () => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in 
         const user = userCredential.user;
-        console.log("email cadastrado", user.email)
+        console.log("email cadastrado", user.email);
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage)
-        // ..
+        setErrorLogin({
+          errorCode: error.code,
+          errorMessage: error.message
+        });
+        console.log(errorLogin.message);
       });
   }
-
-  const handleLogin = () => {
-    console.log(email);
-    console.log(password);
-  };
 
   return (
     <View style={styles.container}>

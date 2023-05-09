@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Roboto_400Regular } from "expo-font";
 
 export default styles = StyleSheet.create({
   container: {
@@ -44,7 +45,7 @@ export default styles = StyleSheet.create({
     color: '#434343',
     fontSize: 14,
     textAlign: 'center',
-    fontFamily: 'Roboto-Regular'
+    fontFamily: Roboto_400Regular
   },
   registerTitle: {
     marginTop: 28,
