@@ -2,14 +2,11 @@ import db from '../database/firebaseDb';
 import { collection } from 'firebase/firestore';
 import { getDocs, getDoc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 
-export const addUser = async (name, age, email) => {
+export const addUser = async (user) => {
   const usersCollection = collection(db, 'users');
 
-  await addDoc(usersCollection, {
-    name: name,
-    age: age,
-    email: email,
-  }).then(() => {
+  await addDoc(usersCollection, user)
+  .then(() => {
     console.log("Document successfully written!");
   }).catch((error) => {
     console.log("error", error);
