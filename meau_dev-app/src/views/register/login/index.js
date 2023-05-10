@@ -1,27 +1,59 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login({ navigation }) {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorLogin, setErrorLogin] = useState('');
 
-  const handleLogin = () => {
-    console.log(username);
-    console.log(password);
+  const authErrorAlert = () => {
+    Alert.alert('Erro de autenticação', 'Usuário não existe', 
+    [ {text: 'OK', onPress: () => console.log('OK Pressed')} ]);
+  };
+
+  const loginFireBase = () => {
+    const auth = getAuth();
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        navigation.navigate('Home');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorLogin(error);
+        authErrorAlert();
+      });
   };
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <TextInput placeholder='Nome de Usuário' style={styles.textInput} />
-      <TextInput placeholder='Senha' secureTextEntry={true} style={styles.textInput} />
-      <TouchableOpacity style={styles.entrar} onPress={() => { handleLogin(), navigation.navigate('Cadastro Pessoal') }} >
+      <TextInput
+        placeholder='Email'
+        style={styles.textInput}
+        type="text"
+        onChangeText={text => setEmail(text)}
+        value={email}
+      />
+      <TextInput
+        placeholder='Senha'
+        secureTextEntry={true}
+        style={styles.textInput}
+        onChangeText={text => setPassword(text)}
+        value={password} />
+      <TouchableOpacity
+        style={styles.entrar}
+        onPress={() => loginFireBase()}
+      >
         <Text style={{ color: '#434343', textAlign: 'center', fontSize: 10 }} >ENTRAR </Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.facebook}>
-        <Text style={{ color: 'white', textAlign: 'center', fontSize: 10, marginStart: 8 }} onPress={() => navigation.navigate('Cadastro Animal')} >ENTRAR COM FACEBOOK </Text>
+        <Text style={{ color: 'white', textAlign: 'center', fontSize: 10, marginStart: 8 }} >ENTRAR COM FACEBOOK </Text>
         <Icon style={{ position: 'absolute', color: 'white', marginStart: 30 }} name='facebook' size={15} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.google} >
