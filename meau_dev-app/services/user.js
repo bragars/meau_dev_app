@@ -20,6 +20,7 @@ export const remove = (id) => {
 export const update = (id, data) => {
   return updateUser(id, data);
 };
+<<<<<<< HEAD
 
 // export const getCurrentUser = () => {
 //   firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
@@ -69,3 +70,5 @@ const verifyToken = async (navigation) => {
 
   }
 };
+=======
+>>>>>>> c22b064c798ba5b7e7140c2ead81fca39e2e01cb
