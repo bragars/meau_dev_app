@@ -109,11 +109,7 @@ const PersonalRegisterScreen = ({ navigation }) => {
         <AddPhoto onPress={() => openImagePicker()}></AddPhoto>
         {/* <Button needAuth="true" text="Fazer Cadastro" type="greenButton" /> */}
         <TouchableOpacity style={styles.button}
-<<<<<<< HEAD
           onPress={() => {handleRegister(), navigation.navigate('Cadastro')}} >
-=======
-          onPress={() => handleRegister()} >
->>>>>>> c22b064c798ba5b7e7140c2ead81fca39e2e01cb
           <Text style={styles.buttonText} >Fazer Cadastro </Text>
         </TouchableOpacity>
       </ScrollView>

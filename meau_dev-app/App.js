@@ -1,40 +1,21 @@
-import 'react-native-gesture-handler';
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { Router } from './src/routes/routes';
+import React from 'react';
+import { Router } from './src/routes/router';
+import { AppRegistry } from 'react-native';
+import { name as appName } from './app.json';
 import { Provider } from 'react-redux';
-import configureStore from './store';
-// import { verifyToken } from './services/user';
+import { NavigationContainer } from "@react-navigation/native";
+import configureStore from './redux/store/configureStore';
 
 const store = configureStore();
 
-const App = () => {
-  // const [isVerifyingToken, setIsVerifyingToken] = React.useState(false);
+const App = () => (
+  <Provider store = { store }>
+    <NavigationContainer>
+      <Router />
+    </NavigationContainer>
+  </Provider>
+)
 
-  // const handleComponentDidAppear = (event) => {
-  //   if (event.componentName === 'Cadastro Pessoal' && !isVerifyingToken) {
-  //     setIsVerifyingToken(true);
-  //     verifyToken(event.component.props.navigation).finally(() => {
-  //       setIsVerifyingToken(false);
-  //     });
-  //   }
-  // };
-
-  // React.useEffect(() => {
-  //   const subscription = navigation.events().registerComponentDidAppear(handleComponentDidAppear);
-
-  //   return () => {
-  //     subscription.remove();
-  //   };
-  // }, []);
-  
-  return (
-    <Provider store = { store }>
-      <NavigationContainer>
-        <Router/>
-      </NavigationContainer>
-    </Provider>
-  );
-}
+AppRegistry.registerComponent(appName, () => App);
 
 export default App;

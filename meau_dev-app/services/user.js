@@ -1,5 +1,5 @@
 import { addUser, getUser, getUsers, removeUser, updateUser } from '../dao/user';
-import firebase from 'firebase/app';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export const create = (name, age, email) => {
   addUser(name, age, email);
@@ -20,31 +20,32 @@ export const remove = (id) => {
 export const update = (id, data) => {
   return updateUser(id, data);
 };
-<<<<<<< HEAD
 
-// export const getCurrentUser = () => {
-//   firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
-//   .then(function(idToken) {
-//     console.log(idToken);
-//     return doc[idToken], idToken;
-//   }).catch(function(error) {
-//     console.log(error);
-//   });
-// }
+export const getCurrentUser = async () => {
+  const currentUser = getAuth().currentUser;
+
+  if (currentUser)
+    return currentUser;
+}
+
+export const getToken = async () => {
+  const currentUser = getAuth().currentUser;
+
+  if (currentUser) {
+    const token = await currentUser.getIdToken();
+    return token;
+  }
+};
 
 export const tokenIsValid = async (lastLogin) => {
-  // Calculate the difference between the current time and the lastLogin timestamp
   const currentTime = new Date().getTime();
   const lastLoginTime = new Date(lastLogin).getTime();
   const timeDiffInHours = (currentTime - lastLoginTime) / (1000 * 60 * 60);
 
-  if (timeDiffInHours > 72) {
-    // Log the user out or take other appropriate action
+  if (timeDiffInHours > 72)
     return false;
-  } else {
-    // Update the lastLogin timestamp to the current time
+  else 
     return true;
-  }
 }
 
 const verifyToken = async (navigation) => {
@@ -54,7 +55,6 @@ const verifyToken = async (navigation) => {
   if (currentUser) {
     // Get the user's token from Firestore
     const userDoc = await firebase.firestore().collection('users').doc(currentUser.uid).get();
-    const token = userDoc.data().token;
     const lastLogin = userDoc.data().lastLogin;
 
     // Verify the token is valid
@@ -70,5 +70,3 @@ const verifyToken = async (navigation) => {
 
   }
 };
-=======
->>>>>>> c22b064c798ba5b7e7140c2ead81fca39e2e01cb
