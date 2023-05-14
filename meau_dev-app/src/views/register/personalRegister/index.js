@@ -33,6 +33,7 @@ const PersonalRegisterScreen = ({ navigation }) => {
       phone: phone,
       address: address,
       state: state,
+      last_login: ''
     });
   };
 
