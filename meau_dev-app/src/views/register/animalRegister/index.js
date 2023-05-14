@@ -16,9 +16,9 @@ const AnimalRegisterScreen = ({ navigation }) => {
     const [checked9, setChecked9]   = useState(false);
     const [checked10, setChecked10] = useState(false);
 
-    const [checked01, setChecked01]   = useState(false);
-    const [checked02, setChecked02]   = useState(false);
-    const [checked03, setChecked03]   = useState(false);
+    const [checked01, setChecked01] = useState(false);
+    const [checked02, setChecked02] = useState(false);
+    const [checked03, setChecked03] = useState(false);
     const [checked04, setChecked04] = useState(false);
     const [checked05, setChecked05] = useState(false);
     const [checked06, setChecked06] = useState(false);
@@ -30,21 +30,15 @@ const AnimalRegisterScreen = ({ navigation }) => {
 
     const [specie, setSpecie]       = useState('');
     const [gender, setGender]       = useState('');
-    const [animal, setAnimal]       = useState('');
+    const [animal, setAnimal]       = useState({});
     const [name, setName]           = useState('');
     const [size, setSize]           = useState('');
     const [age, setAge]             = useState('');
     
     const handleRegister = () => {
-        checkAuth();
         setAnimalFields();
-        console.log(animal);
         createAnimal(animal);
-    };
-
-    const checkAuth = () => {
-        console.log('pressed');
-        // navigate('Cadastro'); // <- navigation to Main screen
+        cleanAnimalFields();
     };
 
     const setAnimalFields = () => {
@@ -58,6 +52,41 @@ const AnimalRegisterScreen = ({ navigation }) => {
             guard: guard,
             health: health
         });
+    };
+
+    const cleanAnimalFields = () => {
+        setAnimal({});
+        setSpecie();
+        setGender();
+        setSize();
+        setAge();
+        setTemperance();
+        setChecked1(false);
+        setTemperance();
+        setChecked2(false);
+        setTemperance();
+        setChecked3(false);
+        setGuard();
+        setChecked4(false);
+        setGuard();
+        setChecked5(false);
+        setGuard();
+        setChecked6(false);
+        setHealth();
+        setChecked7(false);
+        setHealth();
+        setChecked8(false);
+        setHealth();
+        setChecked9(false);
+        setHealth();
+        setChecked10(false);
+        setChecked01(false);
+        setChecked02(false);
+        setChecked03(false);
+        setChecked04(false);
+        setChecked05(false);
+        setChecked06(false);
+        setChecked07(false);
     };
 
     return (
@@ -240,7 +269,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                     onPress={() => setChecked07(!checked07)}
                 />
                 <TouchableOpacity 
-                    onPress={() => { handleRegister() }}
+                    onPress={() => {handleRegister(), navigation.navigate('Home')}}
                     style={styles.buttonCadastro} >
                     <Text style={styles.buttonText} >COLOCAR PARA ADOÇÃO</Text>
                 </TouchableOpacity>

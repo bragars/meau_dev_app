@@ -18,11 +18,9 @@ const PersonalRegisterScreen = ({ navigation }) => {
   const [user, setUser] = useState({});
 
   const handleRegister = () => {
-    console.log("handle");
     setUserFields();
-    console.log("handle2");
     createUser(user);
-    console.log("handle3");
+    cleanUserFields();
   };
 
   const setUserFields = () => {
@@ -35,8 +33,22 @@ const PersonalRegisterScreen = ({ navigation }) => {
       city: city,
       phone: phone,
       address: address,
-      state: state,
+      state: state
+      // last_login: ''
     });
+  };
+
+  const cleanUserFields = () => {
+    setName('');
+    setUsername('');
+    setAge('');
+    setPassword('');
+    setEmail('');
+    setCity('');
+    setPhone('');
+    setAddress('');
+    setState('');
+    setUser({});
   };
 
   return (
@@ -112,7 +124,7 @@ const PersonalRegisterScreen = ({ navigation }) => {
         <AddPhoto onPress={() => openImagePicker()}></AddPhoto>
         {/* <Button needAuth="true" text="Fazer Cadastro" type="greenButton" /> */}
         <TouchableOpacity style={styles.button}
-          onPress={() => handleRegister()} >
+          onPress={() => {handleRegister(), navigation.navigate('Home')}} >
           <Text style={styles.buttonText} >Fazer Cadastro </Text>
         </TouchableOpacity>
       </ScrollView>

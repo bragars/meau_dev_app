@@ -1,5 +1,5 @@
 import db from '../database/firebaseDb';
-import { collection } from 'firebase/firestore';
+import { collection, doc } from 'firebase/firestore';
 import { getDocs, getDoc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 
 export const addUser = async (user) => {
@@ -33,11 +33,9 @@ export const getUsers = async () => {
 export const getUser = async (id) => {
   const userDoc = await getDoc(doc(db, 'users', id))
 
-  if (userDoc.exists()) {
-    console.log(userDoc.data());
+  if (userDoc.exists())
     return userDoc;
-
-  } else {
+  else {
     console.log('No such document!');
   }
 };
@@ -56,8 +54,8 @@ export const removeUser = async (id) => {
 export const updateUser = async (id, data) => {
   try {
     const userDoc = doc(db, 'users', id);
-
-    await updateDoc(userDoc, data);    
+    console.log(data);
+    await updateDoc(userDoc, data);
     console.log('User successfully updated!');
   } catch (error) {
     console.error('Error updating user: ', error);
