@@ -20,6 +20,7 @@ const PersonalRegisterScreen = ({ navigation }) => {
   const handleRegister = () => {
     setUserFields();
     createUser(user);
+    cleanUserFields();
   };
 
   const setUserFields = () => {
@@ -32,9 +33,22 @@ const PersonalRegisterScreen = ({ navigation }) => {
       city: city,
       phone: phone,
       address: address,
-      state: state,
-      last_login: ''
+      state: state
+      // last_login: ''
     });
+  };
+
+  const cleanUserFields = () => {
+    setName('');
+    setUsername('');
+    setAge('');
+    setPassword('');
+    setEmail('');
+    setCity('');
+    setPhone('');
+    setAddress('');
+    setState('');
+    setUser({});
   };
 
   return (
@@ -110,7 +124,7 @@ const PersonalRegisterScreen = ({ navigation }) => {
         <AddPhoto onPress={() => openImagePicker()}></AddPhoto>
         {/* <Button needAuth="true" text="Fazer Cadastro" type="greenButton" /> */}
         <TouchableOpacity style={styles.button}
-          onPress={() => {handleRegister(), navigation.navigate('Cadastro')}} >
+          onPress={() => {handleRegister(), navigation.navigate('Home')}} >
           <Text style={styles.buttonText} >Fazer Cadastro </Text>
         </TouchableOpacity>
       </ScrollView>
