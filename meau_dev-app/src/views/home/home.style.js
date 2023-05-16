@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
   },
   olaText: {
-    fontFamily: 'Courgette-Regular',
+    fontFamily: "Courgette_400Regular",
     color: '#ffd358',
     fontSize: 53,
     marginBottom: 52,

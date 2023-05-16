@@ -3,15 +3,22 @@ import { Router } from './src/routes/router';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from "@react-navigation/native";
 import configureStore from './redux/store/configureStore';
+import { useFonts, Courgette_400Regular } from "@expo-google-fonts/courgette"
 
-const store = configureStore();
+export default function App() {
 
-const App = () => (
-  <Provider store = { store }>
-    <NavigationContainer>
-      <Router />
-    </NavigationContainer>
-  </Provider>
-)
+  const [fontsLoaded] = useFonts({
+    Courgette_400Regular,
+  })
+  
+  if(!fontsLoaded) return undefined;
 
-export default App;
+  const store = configureStore();
+  return (
+    <Provider store={store} >
+      <NavigationContainer>
+        <Router />
+      </NavigationContainer>
+    </Provider >
+  )
+};
