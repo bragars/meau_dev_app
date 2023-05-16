@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, TextInput, View, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
 import { RadioButton, Checkbox } from 'react-native-paper'
 import styles from './styles.style';
+import AddPhoto from '../../../components/addPhoto';
 import { create as createAnimal } from '../../../../services/animal';
 
 const AnimalRegisterScreen = ({ navigation }) => {
@@ -36,30 +37,17 @@ const AnimalRegisterScreen = ({ navigation }) => {
     const [age, setAge]             = useState('');
     
     const handleRegister = () => {
-        setAnimalFields();
-        createAnimal(animal);
+        createAnimal({ name, specie, gender, size, age, temperance, guard, health });
         cleanAnimalFields();
-    };
-
-    const setAnimalFields = () => {
-        setAnimal({
-            name: name,
-            specie: specie,
-            gender: gender,
-            size: size,
-            age: age,
-            temperance: temperance,
-            guard: guard,
-            health: health
-        });
     };
 
     const cleanAnimalFields = () => {
         setAnimal({});
-        setSpecie();
-        setGender();
-        setSize();
-        setAge();
+        setSpecie('');
+        setGender('');
+        setName('');
+        setSize('');
+        setAge('');
         setTemperance();
         setChecked1(false);
         setTemperance();

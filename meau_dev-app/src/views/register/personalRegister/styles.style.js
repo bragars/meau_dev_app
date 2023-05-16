@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Roboto_400Regular } from "expo-font";
 
-export default styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -53,3 +53,5 @@ export default styles = StyleSheet.create({
     marginBottom: 32,
   },
 });
+
+export default styles;

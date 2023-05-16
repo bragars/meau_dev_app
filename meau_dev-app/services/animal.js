@@ -1,7 +1,7 @@
 import { addAnimal, getAnimal, getAnimals, removeAnimal, updateAnimal } from '../dao/animal';
 
-export const create = (name, age, email) => {
-  addAnimal(name, age, email);
+export const create = (animal) => {
+  addAnimal(animal);
 };
 
 export const getAll = () => {

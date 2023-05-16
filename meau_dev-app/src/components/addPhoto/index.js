@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 import styles from './styles.style';
 
-export default AddPhoto = () => {
+const AddPhoto = () => {
   return (
     <View style={styles.container}>
       <Image style={{
@@ -14,3 +14,5 @@ export default AddPhoto = () => {
     </View>
   );
 }
+
+export default AddPhoto;
