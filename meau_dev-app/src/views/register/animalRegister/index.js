@@ -129,7 +129,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                     </View>
                 </RadioButton.Group>
                 <Text>Temperamento</Text>
-                <View style={styles.row}>
+                <View style={styles.row1}>
                     <Checkbox.Item
                         label='Brincalhão'
                         status={checked1 ? 'checked' : 'unchecked'}

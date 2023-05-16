@@ -27,7 +27,7 @@ const Login = ({ navigation, actions }) => {
         const token = userCredential.user.accessToken;
         // updateTimestamp(userCredential);
         actions.storeToken(token);
-        navigation.navigate('Cadastro Animal');
+        navigation.navigate('Home');
       })
       .catch((error) => {
         setErrorLogin(error);
