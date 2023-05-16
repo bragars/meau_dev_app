@@ -6,7 +6,7 @@ const HomeScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.olaText}>
-                Olá !
+                Olá!
             </Text>
             <Text style={styles.textCenter}>
                 Bem vindo ao Meau! {"\n"}

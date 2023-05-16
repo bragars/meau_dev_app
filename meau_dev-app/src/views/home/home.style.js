@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     marginBottom: 52,
   },
   textCenter: {
+    fontFamily: "Roboto_400Regular",
     textAlign: "center",
     color: '#757575',
   },
@@ -26,6 +27,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textButton: {
+    fontFamily: "Roboto_400Regular",
     color: '#434343',
     textAlign: 'center',
     fontSize: 15,
