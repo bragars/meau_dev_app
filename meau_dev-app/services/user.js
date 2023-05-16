@@ -7,8 +7,8 @@ import {
 } from "../dao/user";
 import { getAuth } from "firebase/auth";
 
-export const create = (name, age, email) => {
-  addUser(name, age, email);
+export const create = (user) => {
+  addUser(user);
 };
 
 export const getAll = () => {

@@ -18,24 +18,8 @@ const PersonalRegisterScreen = ({ navigation }) => {
   const [user, setUser] = useState({});
 
   const handleRegister = () => {
-    setUserFields();
-    createUser(user);
+    createUser({ name, username,  age,  password, email, city, phone, address, state}); // last_login: ''
     cleanUserFields();
-  };
-
-  const setUserFields = () => {
-    setUser({
-      name: name,
-      username: username, 
-      age: age, 
-      password: password,
-      email: email,
-      city: city,
-      phone: phone,
-      address: address,
-      state: state
-      // last_login: ''
-    });
   };
 
   const cleanUserFields = () => {

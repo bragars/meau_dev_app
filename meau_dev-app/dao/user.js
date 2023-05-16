@@ -4,7 +4,7 @@ import { getDocs, getDoc, addDoc, deleteDoc, updateDoc } from 'firebase/firestor
 
 export const addUser = async (user) => {
   const usersCollection = collection(db, 'users');
-
+  console.log(user);
   await addDoc(usersCollection, user)
   .then(() => {
     console.log("Document successfully written!");
