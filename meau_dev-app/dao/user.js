@@ -1,16 +1,17 @@
 import db from '../database/firebaseDb';
 import { collection, doc } from 'firebase/firestore';
-import { getDocs, getDoc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { getDocs, getDoc, deleteDoc, updateDoc, setDoc } from 'firebase/firestore';
 
-export const addUser = async (user) => {
-  const usersCollection = collection(db, 'users');
-  console.log(user);
-  await addDoc(usersCollection, user)
+export const addUser = async (user, uid) => {
+  const userDocRef = doc(db, 'users', uid);
+
+  await setDoc(userDocRef, user)
   .then(() => {
-    console.log("Document successfully written!");
-  }).catch((error) => {
-    console.log("error", error);
-  });
+    console.log("Document has been added successfully)");
+  })
+  .catch(error => {
+      console.log(error);
+  })
 };
 
 export const getUsers = async () => {

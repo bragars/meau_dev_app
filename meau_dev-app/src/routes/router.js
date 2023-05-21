@@ -3,11 +3,12 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigationState } from "@react-navigation/native";
 import { useSelector } from "react-redux";
+import { verifyToken } from "../../services/user";
 import Login from "../views/register/login";
 import AnimalRegisterScreen from "../views/register/animalRegister";
 import PersonalRegisterScreen from "../views/register/personalRegister";
-import { verifyToken } from "../../services/user";
 import HomeScreen from "../views/home/home";
+import MyAnimals from "../views/myAnimals";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -34,6 +35,10 @@ const DrawerNavigation = ({ isValidToken }) => {
         <Drawer.Screen
           name="Cadastro Animal"
           component={AnimalRegisterScreen}
+        />
+        <Drawer.Screen
+          name="Meus Pets"
+          component={MyAnimals}
         />
       </Drawer.Navigator>
     );

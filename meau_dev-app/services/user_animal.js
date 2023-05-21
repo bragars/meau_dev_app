@@ -1,6 +1,5 @@
-// https://medium.com/firebase-tips-tricks/how-to-secure-many-to-many-relationships-in-firestore-d19f972fd4d3
-
 import db from '../database/firebaseDb';
+import { collection, doc, getDocs } from 'firebase/firestore';
 
 export const getUsers = async (userId) => {
   const junctions = await db
@@ -17,7 +16,24 @@ export const getUsers = async (userId) => {
   return animals.filter(doc => doc.exists).map(doc => ({ id: doc.id, ...doc.data() }));
 }
 
-async function pets(userId, animalId) {
-  const junctionRef = db.doc(`junction_user_animal/${userId}_${animalId}`);
-  await junctionRef.set({ userId, animalId });
+export const getUserAnimals = async (userToken) => {
+  var animals = [];
+
+  console.log(userToken);
+  const uid = doc(userToken).id;
+  console.log(uid);
+
+  // await getDocs(collection(db, `users_animals/${userId}/animals`))
+  // .then((docs) => {
+  //   docs.forEach((doc) => {
+  //     console.log(doc.data());
+  //     animals.push(doc.data());
+  //   });
+  // })
+  // .catch((error) => {
+  //   console.log(error);
+  // });
+  
+  console.log(animals);
+  return animals;
 }

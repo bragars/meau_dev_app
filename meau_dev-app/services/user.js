@@ -1,14 +1,13 @@
-import {
-  addUser,
-  getUser,
-  getUsers,
-  removeUser,
-  updateUser,
-} from "../dao/user";
-import { getAuth } from "firebase/auth";
+import { addUser, getUser, getUsers, removeUser, updateUser } from "../dao/user";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
-export const create = (user) => {
-  addUser(user);
+export const create = async (user) => {
+  try {
+    const uid = await createUserInAuthEntity(user.email, user.password);
+    await addUser(user, uid);
+  } catch (error) {
+    console.log("Error:", error);
+  }
 };
 
 export const getAll = () => {
@@ -93,5 +92,18 @@ export const verifyToken = async () => {
     else
       return true;
       // await currentUser.ref.update({ lastLoginAt: new Date().toISOString() });
+  }
+};
+
+export const createUserInAuthEntity = async (email, password) => {
+  const auth = getAuth();
+
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    return userCredential.user.uid;
+
+  } catch (error) {
+    console.log('Sign-up error:', error);
+    throw new Error('Failed to sign up in auth service.');
   }
 };
