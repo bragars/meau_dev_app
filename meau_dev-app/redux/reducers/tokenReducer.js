@@ -10,8 +10,8 @@ const tokenReducer = (state = initialState, action) => {
       return {
         token: action.payload,
       };
-    default:
-      return state;
+      default:
+        return state;
   }
 };
 

@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, TouchableOpacity, Image } from "react-native";
+import { View } from "react-native";
 import { getUserAnimals } from "../../../services/user_animal";
-import { useSelector } from "react-redux";
 import AnimalCard from "../../components/animalCard"
 import styles from "./styles.style";
 
 const MyAnimals = ({ navigation }) => {
-  const userToken = useSelector((state) => state.token);
   const [animals, setAnimals] = useState([]);
 
   useEffect(() => {
-    console.log("getUserAnimals - useEffect");
-    setAnimals(getUserAnimals(userToken));
-  }, [])
+    const fetchData = async () => {
+      try {
+        setAnimals(await getUserAnimals());
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <View style={styles.container}>

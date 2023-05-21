@@ -1,6 +1,8 @@
 import { addUser, getUser, getUsers, removeUser, updateUser } from "../dao/user";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
+const auth = getAuth();
+
 export const create = async (user) => {
   try {
     const uid = await createUserInAuthEntity(user.email, user.password);
@@ -96,8 +98,6 @@ export const verifyToken = async () => {
 };
 
 export const createUserInAuthEntity = async (email, password) => {
-  const auth = getAuth();
-
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     return userCredential.user.uid;
@@ -106,4 +106,14 @@ export const createUserInAuthEntity = async (email, password) => {
     console.log('Sign-up error:', error);
     throw new Error('Failed to sign up in auth service.');
   }
+};
+
+export const signOut = async () => {
+  await signOut(auth)
+    .then(() => {
+      console.log('User signed out successfully');
+    })
+    .catch((error) => {
+      console.log('Error signing out:', error);
+    });
 };

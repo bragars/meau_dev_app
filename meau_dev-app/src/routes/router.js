@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { DrawerContentScrollView, DrawerItem, DrawerItemList, createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigationState } from "@react-navigation/native";
-import { useSelector } from "react-redux";
-import { verifyToken } from "../../services/user";
+import { useDispatch, useSelector } from "react-redux";
+import { verifyToken, signOut } from "../../services/user";
 import Login from "../views/register/login";
 import AnimalRegisterScreen from "../views/register/animalRegister";
 import PersonalRegisterScreen from "../views/register/personalRegister";
@@ -12,6 +12,26 @@ import MyAnimals from "../views/myAnimals";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
+
+const CustomDrawerContent = (props) => {
+  // const dispatch = useDispatch();
+
+  const handleSignOut = () => {
+    // dispatch(signOut());
+    console.log("signOut");
+    // signOut();
+  };
+
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem
+        label="Sair"
+        onPress={handleSignOut}
+      />
+    </DrawerContentScrollView>
+  );
+};
 
 const NotAuthUserDrawerNavigation = () => {
   return (
@@ -25,7 +45,7 @@ const NotAuthUserDrawerNavigation = () => {
 const DrawerNavigation = ({ isValidToken }) => {
   if (isValidToken) {
     return (
-      <Drawer.Navigator>
+      <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />} >
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Login" component={Login} />
         <Drawer.Screen
