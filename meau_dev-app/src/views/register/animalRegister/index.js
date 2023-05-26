@@ -37,20 +37,22 @@ const AnimalRegisterScreen = ({ navigation }) => {
     const [name, setName]           = useState('');
     const [size, setSize]           = useState('');
     const [age, setAge]             = useState('');
-    const [file, setFile]           = useState('');
+    const [file, setFile]           = useState({ imagePath: 'animals/', base64: '' });
 
     const handleRegister = () => {
-        // createAnimal({ name, specie, gender, size, age, temperance, guard, health });
-        console.log(file);
-        sendPhoto();
-        // cleanAnimalFields();
+        const aleatoryNumber = 1;
+        const imageRef = file.imagePath + name + aleatoryNumber;
+
+        createAnimal({ name, specie, gender, size, age, temperance, guard, health, imageRef });
+        sendPhoto(imageRef);
+        cleanAnimalFields();
     };
     
-    const sendPhoto = async () => {
+    const sendPhoto = async (imageRef) => {
         // var file = document.getElementById('fileInput').files[0];
         // var fileRef = storageRef.child('files/' + file.name);
 
-        await uploadBytes(ref(storage, 'ImageFile'), file)
+        await uploadBytes(ref(storage, imageRef), file)
         .then((snapshot) => {
           console.log('File uploaded successfully!');
         }).catch((error) => {
@@ -59,7 +61,10 @@ const AnimalRegisterScreen = ({ navigation }) => {
     };
 
     const handleImageChange = (image) => {
-        setFile(image);
+        setFile(previous => ({
+            ...previous,
+            ...{ base64: image }
+          }));
     };
 
     const cleanAnimalFields = () => {
