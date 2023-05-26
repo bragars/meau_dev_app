@@ -4,6 +4,8 @@ import { RadioButton, Checkbox } from 'react-native-paper'
 import styles from './styles.style';
 import AddPhoto from '../../../components/addPhoto';
 import { create as createAnimal } from '../../../../services/animal';
+import { storage } from '../../../../database/firebaseDb';
+import { ref, uploadBytes } from 'firebase/storage';
 
 const AnimalRegisterScreen = ({ navigation }) => {
     const [checked1, setChecked1]   = useState(false);
@@ -35,10 +37,29 @@ const AnimalRegisterScreen = ({ navigation }) => {
     const [name, setName]           = useState('');
     const [size, setSize]           = useState('');
     const [age, setAge]             = useState('');
-    
+    const [file, setFile]           = useState('');
+
     const handleRegister = () => {
-        createAnimal({ name, specie, gender, size, age, temperance, guard, health });
-        cleanAnimalFields();
+        // createAnimal({ name, specie, gender, size, age, temperance, guard, health });
+        console.log(file);
+        sendPhoto();
+        // cleanAnimalFields();
+    };
+    
+    const sendPhoto = async () => {
+        // var file = document.getElementById('fileInput').files[0];
+        // var fileRef = storageRef.child('files/' + file.name);
+
+        await uploadBytes(ref(storage, 'ImageFile'), file)
+        .then((snapshot) => {
+          console.log('File uploaded successfully!');
+        }).catch((error) => {
+          console.error('Error uploading file:', error);
+        });
+    };
+
+    const handleImageChange = (image) => {
+        setFile(image);
     };
 
     const cleanAnimalFields = () => {
@@ -97,7 +118,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                     onChangeText={setName}
                 />
                 <Text>Fotos do animal</Text>
-                <AddPhoto></AddPhoto>
+                <AddPhoto onValueChange={handleImageChange} />
                 <RadioButton.Group onValueChange={specie => setSpecie(specie)} value={specie}>
                     <Text>Espécie</Text>
                     <View style={styles.row}>

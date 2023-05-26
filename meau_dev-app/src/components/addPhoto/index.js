@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './styles.style';
 import * as ImagePicker from 'expo-image-picker';
 
-const AddPhoto = () => {
+const AddPhoto = ({ onValueChange }) => {
   const [image, setImage] = useState(null);
 
   const chooseImage = async () => {
@@ -12,12 +12,13 @@ const AddPhoto = () => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      base64: true
     });
 
-    console.log(result);
-
+    
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      onValueChange(result.assets[0].base64);
     }
   };
 
