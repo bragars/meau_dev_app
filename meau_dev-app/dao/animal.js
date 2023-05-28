@@ -1,13 +1,15 @@
 import db from '../database/firebaseDb';
 import { collection, doc } from 'firebase/firestore';
 import { getDocs, getDoc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { createUserAnimal } from '../services/user_animal';
 
-export const addAnimal = async (animal) => {
+export const addAnimal = async (animal, user) => {
   const animalsCollection = collection(db, 'animals');
-  console.log(animal);
   await addDoc(animalsCollection, animal)
-  .then(() => {
+  .then((docs) => {
     console.log("Document successfully written!");
+    console.log("idAnimal", docs.id)
+    createUserAnimal(user, animal, docs.id);
   }).catch((error) => {
     console.log("error", error);
   });
