@@ -1,9 +1,14 @@
 import { addAnimal, getAnimal, getAnimals, removeAnimal, updateAnimal } from '../dao/animal';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../database/firebaseDb';
+import { createUserAnimal } from './user_animal';
 
-export const create = (animal) => {
-  addAnimal(animal);
+export const create = async (animal, user) => {
+  try {
+    addAnimal(animal, user);
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 export const getAll = () => {

@@ -42,12 +42,14 @@ const AnimalRegisterScreen = ({ navigation }) => {
     const handleRegister = () => {
         const aleatoryNumber = 1;
         const imageRef = file.imagePath + name + aleatoryNumber + ".png";
+        const animal = { name, specie, gender, size, age, temperance, guard, health, imageRef };
+        const user = { name: "Octavio Augusto"} // use authenticated username
 
-        createAnimal({ name, specie, gender, size, age, temperance, guard, health, imageRef });
+        createAnimal(animal, user);
         sendPhoto(imageRef);
         cleanAnimalFields();
     };
-    
+
     const sendPhoto = async (imageRef) => {
         // var file = document.getElementById('fileInput').files[0];
         // var fileRef = storageRef.child('files/' + file.name);
@@ -160,7 +162,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Brincalhão'
                         status={checked1 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setTemperance(oldArray => [...oldArray, 'Brincalhão']), 
+                            setTemperance(oldArray => oldArray? [...oldArray, 'Brincalhão'] : null), 
                             setChecked1(!checked1)
                         }}
                         style={styles.margin}
@@ -169,7 +171,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Tímido'
                         status={checked2 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setTemperance(oldArray => [...oldArray, 'Tímido']), 
+                            setTemperance(oldArray => oldArray ? [...oldArray, 'Tímido'] : null), 
                             setChecked2(!checked2)
                         }}
                     />
@@ -177,7 +179,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Calmo'
                         status={checked3 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setTemperance(oldArray => [...oldArray, 'Calmo']), 
+                            setTemperance(oldArray => oldArray ? [...oldArray, 'Calmo'] : null), 
                             setChecked3(!checked3)
                         }}
                     />
@@ -187,7 +189,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Guarda'
                         status={checked4 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setGuard(oldArray => [...oldArray, 'Guarda']), 
+                            setGuard(oldArray => oldArray ? [...oldArray, 'Guarda'] : null), 
                             setChecked4(!checked4)
                         }}
                         style={styles.margin}
@@ -196,7 +198,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Amoroso'
                         status={checked5 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setGuard(oldArray => [...oldArray, 'Amoroso']), 
+                            setGuard(oldArray => oldArray ? [...oldArray, 'Amoroso'] : null), 
                             setChecked5(!checked5)
                         }}
                     />
@@ -204,7 +206,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Preguiçoso'
                         status={checked6 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setGuard(oldArray => [...oldArray, 'Preguiçoso']), 
+                            setGuard(oldArray => oldArray ? [...oldArray, 'Preguiçoso'] : null), 
                             setChecked6(!checked6)
                         }}
                     />
@@ -215,7 +217,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Vacinado'
                         status={checked7 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setHealth(oldArray => [...oldArray, 'Vacinado']), 
+                            setHealth(oldArray => oldArray ? [...oldArray, 'Vacinado'] : null), 
                             setChecked7(!checked7)
                         }}
                         style={styles.margin}
@@ -224,7 +226,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Vermifugado'
                         status={checked8 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setHealth(oldArray => [...oldArray, 'Vermifugado']), 
+                            setHealth(oldArray =>  oldArray ? [...oldArray, 'Vermifugado'] : null), 
                             setChecked8(!checked8)
                         }}
                     />
@@ -234,14 +236,14 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Castrado'
                         status={checked9 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setHealth(oldArray => [...oldArray, 'Castrado']), 
+                            setHealth(oldArray => oldArray ? [...oldArray, 'Castrado'] : null), 
                             setChecked9(!checked9)
                         }}
                     />
                     <Checkbox.Item
                         label='Doente'
                         status={checked10 ? 'checked' : 'unchecked'}
-                        onPress={() => {setHealth(oldArray => [...oldArray, 'Doente']), setChecked10(!checked10)}}
+                        onPress={() => {setHealth(oldArray => oldArray ? [...oldArray, 'Doente'] : null), setChecked10(!checked10)}}
                     />
                 </View>
                 <Text>Doenças do animal</Text>
