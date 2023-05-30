@@ -15,7 +15,6 @@ const AddPhoto = ({ onValueChange }) => {
       base64: true
     });
 
-    
     if (!result.canceled) {
       setImage(result.assets[0].uri);
       onValueChange(result.assets[0].base64);

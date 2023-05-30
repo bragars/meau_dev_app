@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Text, View, TouchableOpacity, Image } from "react-native";
+import React from "react";
+import { View, Text, Image } from "react-native";
 import styles from "./styles.style";
 
 const AnimalCard = ({ animal }) => {
   return (
-    <View style={styles.container}>
-      <Text>
-        {animal.name}
-      </Text>
-    </View>
+    <>
+      <View style={styles.container}>
+        {
+          animal.imageBase64 !== '' ?
+          <>
+            <Image source={{ uri: `data:image/jpeg;base64,${animal.imageBase64}` }} style={{ width: 200, height: 200 }} />
+            <Text> {animal.name} </Text>
+          </>
+          : <Text> {animal.name} </Text>
+        }
+      </View>
+    </>
   );
 };
 

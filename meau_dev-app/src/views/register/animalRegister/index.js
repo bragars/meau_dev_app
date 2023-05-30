@@ -41,7 +41,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
 
     const handleRegister = () => {
         const aleatoryNumber = 1;
-        const imageRef = file.imagePath + name + aleatoryNumber;
+        const imageRef = file.imagePath + name + aleatoryNumber + ".png";
 
         createAnimal({ name, specie, gender, size, age, temperance, guard, health, imageRef });
         sendPhoto(imageRef);
@@ -52,7 +52,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
         // var file = document.getElementById('fileInput').files[0];
         // var fileRef = storageRef.child('files/' + file.name);
 
-        await uploadBytes(ref(storage, imageRef), file)
+        await uploadBytes(ref(storage, imageRef), file.base64)
         .then((snapshot) => {
           console.log('File uploaded successfully!');
         }).catch((error) => {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { View, Image } from "react-native";
 import { getUserAnimals } from "../../../services/user_animal";
+import { getImageBase64 } from "../../../services/animal";
 import AnimalCard from "../../components/animalCard"
 import styles from "./styles.style";
 
@@ -10,7 +11,20 @@ const MyAnimals = ({ navigation }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setAnimals(await getUserAnimals());
+        const animalsData = await getUserAnimals();
+
+        const animalsWithImages = await Promise.all(
+          animalsData.map(async (animal) => {
+            var imageBase64 = '';
+            if (animal.imageRef) {
+              imageBase64 = await getImageBase64(animal.imageRef);
+            } 
+              return { ...animal, imageBase64 };
+          })
+        )
+        console.log(animalsWithImages);
+        setAnimals(animalsWithImages);
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }

@@ -10,6 +10,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  tinyLogo: {
+    width: 50,
+    height: 50,
+  },
 });
 
 export default styles;
