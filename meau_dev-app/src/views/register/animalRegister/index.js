@@ -40,8 +40,8 @@ const AnimalRegisterScreen = ({ navigation }) => {
     const [file, setFile]           = useState({ imagePath: 'animals/', base64: '' });
 
     const handleRegister = () => {
-        const aleatoryNumber = 1;
-        const imageRef = file.imagePath + name + aleatoryNumber + ".png";
+        const aleatoryNumber = getRandomNumber(0, 10000);
+        const imageRef = file.imagePath + name + aleatoryNumber;
         const animal = { name, specie, gender, size, age, temperance, guard, health, imageRef };
         const user = { name: "Octavio Augusto"} // use authenticated username
 
@@ -100,6 +100,10 @@ const AnimalRegisterScreen = ({ navigation }) => {
         setChecked05(false);
         setChecked06(false);
         setChecked07(false);
+    };
+
+    const getRandomNumber = (min, max) => {
+        return Math.floor(Math.random() * (max - min + 1) + min);
     };
 
     return (
