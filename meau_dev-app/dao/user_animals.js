@@ -57,7 +57,7 @@ export const addAnimals = async (animal, idAnimal) => {
     const userAnimalDocRef = doc(db, "users_animals", uid);
     const animalsCollectionRef = collection(userAnimalDocRef, "animals");
     console.log("idAnimal", idAnimal)
-    await addDoc(animalsCollectionRef, {name: animal.name}, idAnimal)
+    await addDoc(animalsCollectionRef, {name: animal.name, imageRef: animal.imageRef}, idAnimal)
     .then((docs) => {
         console.log("Document successfully written")
     })

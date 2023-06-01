@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Image } from "react-native";
+import { ScrollView, View, Image } from "react-native";
 import { getImageBase64 } from "../../../services/animal";
 import AnimalCard from "../../components/animalCard"
 import styles from "./styles.style";
@@ -34,13 +34,13 @@ const MyAnimals = ({ navigation }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {animals.length > 0 && animals.map((animal, index) => (
         <View key={index} style={styles.pets}>
           <AnimalCard animal={animal} />
         </View>
       ))}
-    </View>
+    </ScrollView>
   );
 };
 
