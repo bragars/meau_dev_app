@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View, Image } from "react-native";
+import { ScrollView, View, Image, ActivityIndicator } from "react-native";
 import { getImageBase64 } from "../../../services/animal";
+import { getUserPets } from "../../../services/user_animal";
 import AnimalCard from "../../components/animalCard"
 import styles from "./styles.style";
-import { getUserAnimals } from "../../../dao/user_animals";
 
 const MyAnimals = ({ navigation }) => {
   const [animals, setAnimals] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const animalsData = await getUserAnimals();
+        const animalsData = await getUserPets();
 
         const animalsWithImages = await Promise.all(
           animalsData.map(async (animal) => {
@@ -22,8 +23,8 @@ const MyAnimals = ({ navigation }) => {
               return { ...animal, imageBase64 };
           })
         )
-        console.log(animalsWithImages);
         setAnimals(animalsWithImages);
+        setLoading(false);
 
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -32,6 +33,14 @@ const MyAnimals = ({ navigation }) => {
 
     fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
     <ScrollView style={styles.container}>

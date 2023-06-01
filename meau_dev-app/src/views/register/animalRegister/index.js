@@ -51,13 +51,8 @@ const AnimalRegisterScreen = ({ navigation }) => {
     };
 
     const sendPhoto = async (imageRef) => {
-        // var file = document.getElementById('fileInput').files[0];
-        // var fileRef = storageRef.child('files/' + file.name);
-        console.log(imageRef)
-        console.log(file.base64)
         await uploadString(ref(storage, imageRef), file.base64, 'base64')
         .then((snapshot) => {
-            console.log(snapshot);
             console.log('File uploaded successfully!');
         }).catch((error) => {
             console.error('Error uploading file:', error);

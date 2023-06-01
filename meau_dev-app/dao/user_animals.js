@@ -65,4 +65,3 @@ export const addAnimals = async (animal, idAnimal) => {
         console.log(error);
     })
 }
-
