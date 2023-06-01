@@ -9,7 +9,7 @@ const AnimalCard = ({ animal }) => {
         {
           animal.imageBase64 !== '' ?
           <>
-            <Image source={{ uri: `data:image/jpeg;base64,${animal.imageBase64}` }} style={{ width: 200, height: 200 }} />
+            <Image source={{ uri: animal.imageBase64 }} style={{ width: 200, height: 200 }} />
             <Text> {animal.name} </Text>
           </>
           : <Text> {animal.name} </Text>

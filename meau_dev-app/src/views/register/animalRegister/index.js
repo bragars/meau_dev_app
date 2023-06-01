@@ -5,7 +5,7 @@ import styles from './styles.style';
 import AddPhoto from '../../../components/addPhoto';
 import { create as createAnimal } from '../../../../services/animal';
 import { storage } from '../../../../database/firebaseDb';
-import { ref, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes, uploadString } from 'firebase/storage';
 
 const AnimalRegisterScreen = ({ navigation }) => {
     const [checked1, setChecked1]   = useState(false);
@@ -53,12 +53,14 @@ const AnimalRegisterScreen = ({ navigation }) => {
     const sendPhoto = async (imageRef) => {
         // var file = document.getElementById('fileInput').files[0];
         // var fileRef = storageRef.child('files/' + file.name);
-
-        await uploadBytes(ref(storage, imageRef), file.base64)
+        console.log(imageRef)
+        console.log(file.base64)
+        await uploadString(ref(storage, imageRef), file.base64, 'base64')
         .then((snapshot) => {
-          console.log('File uploaded successfully!');
+            console.log(snapshot);
+            console.log('File uploaded successfully!');
         }).catch((error) => {
-          console.error('Error uploading file:', error);
+            console.error('Error uploading file:', error);
         });
     };
 
