@@ -16,10 +16,25 @@ const PersonalRegisterScreen = ({ navigation }) => {
   const [address, setAddress] = useState('');
   const [state, setState] = useState('');
   const [user, setUser] = useState({});
+  const [file, setFile] = useState({ imagePath: 'animals/', base64: '' });
 
   const handleRegister = () => {
-    createUser({ name, username,  age,  password, email, city, phone, address, state}); // last_login: ''
+    const aleatoryNumber = getRandomNumber(0, 10000);
+    const imageRef = file.imagePath + name + aleatoryNumber;
+    const user = { name, username,  age,  password, email, city, phone, address, state, imageRef } 
+
+    createUser(user);
+    sendPhoto(imageRef);
     cleanUserFields();
+  };
+
+  const sendPhoto = async (imageRef) => {
+    await uploadString(ref(storage, imageRef), file.base64, 'base64')
+    .then((snapshot) => {
+        console.log('File uploaded successfully!');
+    }).catch((error) => {
+        console.error('Error uploading file:', error);
+    });
   };
 
   const cleanUserFields = () => {
@@ -33,6 +48,13 @@ const PersonalRegisterScreen = ({ navigation }) => {
     setAddress('');
     setState('');
     setUser({});
+  };
+
+  const handleImageChange = (image) => {
+    setFile(previous => ({
+      ...previous,
+      ...{ base64: image }
+    }));
   };
 
   return (
@@ -105,7 +127,7 @@ const PersonalRegisterScreen = ({ navigation }) => {
           onChangeText={setPassword}
           />
         <Text style={styles.registerTitle}>Foto de perfil</Text>
-        <AddPhoto onPress={() => openImagePicker()}></AddPhoto>
+        <AddPhoto onValueChange={handleImageChange} />
         {/* <Button needAuth="true" text="Fazer Cadastro" type="greenButton" /> */}
         <TouchableOpacity style={styles.button}
           onPress={() => {handleRegister(), navigation.navigate('Home')}} >

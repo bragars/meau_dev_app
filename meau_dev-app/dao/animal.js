@@ -1,5 +1,5 @@
 import db from '../database/firebaseDb';
-import { collection, doc } from 'firebase/firestore';
+import { collection, doc, query, where } from 'firebase/firestore';
 import { getDocs, getDoc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { createUserAnimal } from '../services/user_animal';
 
@@ -13,6 +13,23 @@ export const addAnimal = async (animal, user) => {
   }).catch((error) => {
     console.log("error", error);
   });
+};
+
+export const getAnimalsForAdoption = async () => {
+  var animals = [];
+  const q = query(collection(db, 'animals'), where("adopted", "==", "false"));
+
+  await getDocs(q)
+    .then((docs) => {
+      docs.forEach((doc) => {
+        animals.push(doc.data());
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  return animals;
 };
 
 export const getAnimals = async () => {
