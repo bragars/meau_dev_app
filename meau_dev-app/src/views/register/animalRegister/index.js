@@ -31,13 +31,14 @@ const AnimalRegisterScreen = ({ navigation }) => {
     const [guard, setGuard] = useState([]);
     const [health, setHealth] = useState([]);
 
-    const [specie, setSpecie]       = useState('');
-    const [gender, setGender]       = useState('');
-    const [animal, setAnimal]       = useState({});
-    const [name, setName]           = useState('');
-    const [size, setSize]           = useState('');
-    const [age, setAge]             = useState('');
-    const [file, setFile]           = useState({ imagePath: 'animals/', base64: '' });
+    const [specie, setSpecie]               = useState('');
+    const [gender, setGender]               = useState('');
+    const [animal, setAnimal]               = useState({});
+    const [name, setName]                   = useState('');
+    const [size, setSize]                   = useState('');
+    const [age, setAge]                     = useState('');
+    const [file, setFile]                   = useState({ imagePath: 'animals/', base64: '' });
+    const [formSubmitted, setFormSubmitted] = useState(false);
 
     const handleRegister = () => {
         const aleatoryNumber = getRandomNumber(0, 10000);
@@ -46,8 +47,10 @@ const AnimalRegisterScreen = ({ navigation }) => {
         const user = { name: "Octavio Augusto"} // use authenticated username
 
         createAnimal(animal, user);
-        sendPhoto(imageRef);
+        if (file.base64)
+            sendPhoto(imageRef);
         cleanAnimalFields();
+        setFormSubmitted(true)
     };
 
     const sendPhoto = async (imageRef) => {
@@ -100,6 +103,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
         setChecked05(false);
         setChecked06(false);
         setChecked07(false);
+        setFile({ imagePath: 'animals/', base64: '' });
     };
 
     const getRandomNumber = (min, max) => {
@@ -126,7 +130,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                     onChangeText={setName}
                 />
                 <Text>Fotos do animal</Text>
-                <AddPhoto onValueChange={handleImageChange} />
+                <AddPhoto onValueChange={handleImageChange} formSubmitted={formSubmitted} />
                 <RadioButton.Group onValueChange={specie => setSpecie(specie)} value={specie}>
                     <Text>Espécie</Text>
                     <View style={styles.row}>

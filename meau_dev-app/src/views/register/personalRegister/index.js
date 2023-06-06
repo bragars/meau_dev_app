@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
 import { create as createUser } from '../../../../services/user';
+import { ref, uploadString } from 'firebase/storage';
+import { storage } from '../../../../database/firebaseDb';
 import AddPhoto from '../../../components/addPhoto';
 
 import styles from './styles.style';
@@ -55,6 +57,10 @@ const PersonalRegisterScreen = ({ navigation }) => {
       ...previous,
       ...{ base64: image }
     }));
+  };
+
+  const getRandomNumber = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
   return (

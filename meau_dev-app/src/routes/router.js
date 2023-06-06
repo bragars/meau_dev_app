@@ -8,9 +8,9 @@ import Login from "../views/register/login";
 import AnimalRegisterScreen from "../views/register/animalRegister";
 import PersonalRegisterScreen from "../views/register/personalRegister";
 import PetAdoption from "../views/petAdoption";
+import AnimalInfo from "../views/AnimalInfo";
 import HomeScreen from "../views/home/home";
 import MyAnimals from "../views/myAnimals";
-import AnimalInfo from "../views/animalInfo";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -66,10 +66,6 @@ const DrawerNavigation = ({ isValidToken }) => {
           name="Adotar um Pet"
           component={PetAdoption}
         />
-        <Drawer.Screen
-          name="AnimalInfo"
-          component={AnimalInfo}
-        />
       </Drawer.Navigator>
     );
   } else {
@@ -96,6 +92,8 @@ export const Router = ({ navigation }) => {
       <Stack.Screen name="Drawer">
         {(props) => <DrawerNavigation {...props} isValidToken={isValidToken} />}
       </Stack.Screen>
+      <Stack.Screen name="AnimalInfo" component={AnimalInfo} />
     </Stack.Navigator>
   );
 };
+
