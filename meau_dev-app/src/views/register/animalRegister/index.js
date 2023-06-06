@@ -50,7 +50,6 @@ const AnimalRegisterScreen = ({ navigation }) => {
         if (file.base64)
             sendPhoto(imageRef);
         cleanAnimalFields();
-        setFormSubmitted(true)
     };
 
     const sendPhoto = async (imageRef) => {
@@ -103,6 +102,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
         setChecked05(false);
         setChecked06(false);
         setChecked07(false);
+        setFormSubmitted(true);
         setFile({ imagePath: 'animals/', base64: '' });
     };
 
