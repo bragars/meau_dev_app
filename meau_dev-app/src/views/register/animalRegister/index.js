@@ -6,6 +6,8 @@ import AddPhoto from '../../../components/addPhoto';
 import { create as createAnimal } from '../../../../services/animal';
 import { storage } from '../../../../database/firebaseDb';
 import { ref, uploadBytes, uploadString } from 'firebase/storage';
+import { get, getCurrentUser } from '../../../../services/user';
+import { showMessage } from 'react-native-flash-message';
 
 const AnimalRegisterScreen = ({ navigation }) => {
     const [checked1, setChecked1]   = useState(false);
@@ -31,28 +33,49 @@ const AnimalRegisterScreen = ({ navigation }) => {
     const [guard, setGuard] = useState([]);
     const [health, setHealth] = useState([]);
 
-    const [specie, setSpecie]               = useState('');
-    const [gender, setGender]               = useState('');
-    const [animal, setAnimal]               = useState({});
-    const [name, setName]                   = useState('');
-    const [size, setSize]                   = useState('');
-    const [age, setAge]                     = useState('');
-    const [file, setFile]                   = useState({ imagePath: 'animals/', base64: '' });
+    const [specie, setSpecie]       = useState('');
+    const [gender, setGender]       = useState('');
+    const [animal, setAnimal]       = useState({});
+    const [name, setName]           = useState('');
+    const [size, setSize]           = useState('');
+    const [age, setAge]             = useState('');
+    const [file, setFile]           = useState({ imagePath: 'animals/', base64: '' });
     const [formSubmitted, setFormSubmitted] = useState(false);
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
+        try {
+            const animal = await getAnimalJSON();
+            createAnimal(animal);
+            showMessage({
+                message: 'Animal criado',
+                description: 'A criação foi um sucesso!',
+                type: 'success',
+            });
+            
+            if (file.base64) sendPhoto(animal.imageRef);
+
+            cleanAnimalFields();
+        }
+        catch(error) {
+            showMessage({
+                message: 'Erro na criação do animal',
+                description: 'Erro na criação!',
+                type: 'info',
+            });
+        }
+
+    };
+
+    const getAnimalJSON = async () => {
         const aleatoryNumber = getRandomNumber(0, 10000);
         const imageRef = file.imagePath + name + aleatoryNumber;
-        const animal = { name, specie, gender, size, age, temperance, guard, health, imageRef };
-        const user = { name: "Octavio Augusto"} // use authenticated username
+        const userId = getCurrentUser().uid;
 
-        createAnimal(animal, user);
-        if (file.base64)
-            sendPhoto(imageRef);
-        cleanAnimalFields();
+        return { name, specie, gender, size, age, temperance, guard, health, imageRef, toBeAdopted : false, user_id: userId, interestedPeople: [] };
     };
 
     const sendPhoto = async (imageRef) => {
+        console.log(imageRef)
         await uploadString(ref(storage, imageRef), file.base64, 'base64')
         .then((snapshot) => {
             console.log('File uploaded successfully!');

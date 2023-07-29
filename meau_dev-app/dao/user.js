@@ -1,6 +1,8 @@
-import db from '../database/firebaseDb';
+import {db} from '../database/firebaseDb';
 import { collection, doc } from 'firebase/firestore';
 import { getDocs, getDoc, deleteDoc, updateDoc, setDoc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
 
 export const addUser = async (user, uid) => {
   const userDocRef = doc(db, 'users', uid);
@@ -32,10 +34,14 @@ export const getUsers = async () => {
 };
 
 export const getUser = async (id) => {
+  console.log(id)
   const userDoc = await getDoc(doc(db, 'users', id))
+  if (userDoc.exists()) {
+    let userData = userDoc.data();
+    userData.id = userDoc.id;
 
-  if (userDoc.exists())
-    return userDoc;
+    return userData;
+  }
   else {
     console.log('No such document!');
   }
@@ -60,5 +66,27 @@ export const updateUser = async (id, data) => {
     console.log('User successfully updated!');
   } catch (error) {
     console.error('Error updating user: ', error);
+  }
+};
+
+export const createUser = async (user) => {
+  try {
+    
+    const auth = getAuth();
+    const database = getDatabase();
+    
+    const userCredential = await createUserWithEmailAndPassword(auth, user.email, user.password);    
+    const userAuth = userCredential.user;
+    await addUser(user, userAuth.uid);
+
+    const displayName = user.name;
+    const photoURL = user.imageRef;
+
+    await updateProfile(userAuth, { displayName, photoURL });
+    const userRef = ref(database, `users/${userAuth.uid}`);
+    await set(userRef, { displayName, photoURL });
+
+  } catch (error) {
+    console.log("Error creating user with profile:", error);
   }
 };

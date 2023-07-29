@@ -4,6 +4,7 @@ import { create as createUser } from '../../../../services/user';
 import { ref, uploadString } from 'firebase/storage';
 import { storage } from '../../../../database/firebaseDb';
 import AddPhoto from '../../../components/addPhoto';
+import { showMessage } from 'react-native-flash-message';
 
 import styles from './styles.style';
 
@@ -18,24 +19,44 @@ const PersonalRegisterScreen = ({ navigation }) => {
   const [address, setAddress] = useState('');
   const [state, setState] = useState('');
   const [user, setUser] = useState({});
-  const [file, setFile] = useState({ imagePath: 'animals/', base64: '' });
+  const [file, setFile] = useState({ imagePath: 'users/', base64: '' });
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
+    try {
+      const user = await getUserJSON();
+      createUser(user);
+      showMessage({
+        message: 'Usuário criado',
+        description: 'A criação foi um sucesso!',
+        type: 'success',
+      });
+
+      if (file.base64) sendPhoto(user.imageRef);
+
+      cleanUserFields();
+    }
+    catch(error) {
+      showMessage({
+        message: 'Erro na criação do usuário',
+        description: 'Erro na criação!',
+        type: 'info',
+      });
+    }
+
+  };
+
+  const getUserJSON = async () => {
     const aleatoryNumber = getRandomNumber(0, 10000);
     const imageRef = file.imagePath + name + aleatoryNumber;
-    const user = { name, username,  age,  password, email, city, phone, address, state, imageRef } 
 
-    createUser(user);
-    if (file.base64)
-      sendPhoto(imageRef);
-
-    cleanUserFields();
-  };
+    return { name, username,  age,  password, email, city, phone, address, state, imageRef, favorites: [], privacySettings: [] }
+};
 
   const sendPhoto = async (imageRef) => {
     await uploadString(ref(storage, imageRef), file.base64, 'base64')
     .then((snapshot) => {
+        console.log(imageRef)
         console.log('File uploaded successfully!');
     }).catch((error) => {
         console.error('Error uploading file:', error);
@@ -54,7 +75,7 @@ const PersonalRegisterScreen = ({ navigation }) => {
     setState('');
     setUser({});
     setFormSubmitted(true);
-    setFile({ imagePath: 'animals/', base64: '' });
+    setFile({ imagePath: 'users/', base64: '' });
   };
 
   const handleImageChange = (image) => {
@@ -139,7 +160,6 @@ const PersonalRegisterScreen = ({ navigation }) => {
           />
         <Text style={styles.registerTitle}>Foto de perfil</Text>
         <AddPhoto onValueChange={handleImageChange} formSubmitted={formSubmitted} />
-        {/* <Button needAuth="true" text="Fazer Cadastro" type="greenButton" /> */}
         <TouchableOpacity style={styles.button}
           onPress={() => {handleRegister(), navigation.navigate('Home')}} >
           <Text style={styles.buttonText} >Fazer Cadastro </Text>
