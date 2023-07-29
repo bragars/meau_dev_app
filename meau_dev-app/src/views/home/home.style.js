@@ -8,12 +8,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
   },
   olaText: {
-    fontFamily: 'Courgette-Regular',
+    fontFamily: "Courgette_400Regular",
     color: '#ffd358',
     fontSize: 53,
     marginBottom: 52,
   },
   textCenter: {
+    fontFamily: "Roboto_400Regular",
     textAlign: "center",
     color: '#757575',
   },
@@ -26,6 +27,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textButton: {
+    fontFamily: "Roboto_400Regular",
     color: '#434343',
     textAlign: 'center',
     fontSize: 15,

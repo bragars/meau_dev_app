@@ -1,11 +1,10 @@
 import { StyleSheet } from 'react-native';
-import { Roboto_400Regular } from "expo-font";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: '#fafafa',
   },
   input: {
@@ -53,7 +52,7 @@ const styles = StyleSheet.create({
     color: '#434343',
     fontSize: 14,
     textAlign: 'center',
-    fontFamily: Roboto_400Regular
+
   },
   registerTitle: {
     marginTop: 28,
@@ -69,7 +68,8 @@ const styles = StyleSheet.create({
     borderBottomColor: '#bdbdbd',
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 20,
-  },
+    marginEnd: 10,
+  }, 
   bold: {
     fontWeight: 'bold',
   },
@@ -79,9 +79,15 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     marginBottom: 20,
+    // justifyContent: 'space-between',
   },
   margin: {
-    marginStart: -15
+    // marginStart: -15
+  },
+  row1: {
+    flexDirection: "row",
+    // justifyContent: 'space-between',
+
   }
 });
 

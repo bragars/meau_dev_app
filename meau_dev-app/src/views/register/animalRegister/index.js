@@ -4,6 +4,10 @@ import { RadioButton, Checkbox } from 'react-native-paper'
 import styles from './styles.style';
 import AddPhoto from '../../../components/addPhoto';
 import { create as createAnimal } from '../../../../services/animal';
+import { storage } from '../../../../database/firebaseDb';
+import { ref, uploadBytes, uploadString } from 'firebase/storage';
+import { get, getCurrentUser } from '../../../../services/user';
+import { showMessage } from 'react-native-flash-message';
 
 const AnimalRegisterScreen = ({ navigation }) => {
     const [checked1, setChecked1]   = useState(false);
@@ -35,10 +39,56 @@ const AnimalRegisterScreen = ({ navigation }) => {
     const [name, setName]           = useState('');
     const [size, setSize]           = useState('');
     const [age, setAge]             = useState('');
-    
-    const handleRegister = () => {
-        createAnimal({ name, specie, gender, size, age, temperance, guard, health });
-        cleanAnimalFields();
+    const [file, setFile]           = useState({ imagePath: 'animals/', base64: '' });
+    const [formSubmitted, setFormSubmitted] = useState(false);
+
+    const handleRegister = async () => {
+        try {
+            const animal = await getAnimalJSON();
+            createAnimal(animal);
+            showMessage({
+                message: 'Animal criado',
+                description: 'A criação foi um sucesso!',
+                type: 'success',
+            });
+            
+            if (file.base64) sendPhoto(animal.imageRef);
+
+            cleanAnimalFields();
+        }
+        catch(error) {
+            showMessage({
+                message: 'Erro na criação do animal',
+                description: 'Erro na criação!',
+                type: 'info',
+            });
+        }
+
+    };
+
+    const getAnimalJSON = async () => {
+        const aleatoryNumber = getRandomNumber(0, 10000);
+        const imageRef = file.imagePath + name + aleatoryNumber;
+        const userId = getCurrentUser().uid;
+
+        return { name, specie, gender, size, age, temperance, guard, health, imageRef, toBeAdopted : false, user_id: userId, interestedPeople: [] };
+    };
+
+    const sendPhoto = async (imageRef) => {
+        console.log(imageRef)
+        await uploadString(ref(storage, imageRef), file.base64, 'base64')
+        .then((snapshot) => {
+            console.log('File uploaded successfully!');
+        }).catch((error) => {
+            console.error('Error uploading file:', error);
+        });
+    };
+
+    const handleImageChange = (image) => {
+        setFile(previous => ({
+            ...previous,
+            ...{ base64: image }
+          }));
     };
 
     const cleanAnimalFields = () => {
@@ -75,6 +125,12 @@ const AnimalRegisterScreen = ({ navigation }) => {
         setChecked05(false);
         setChecked06(false);
         setChecked07(false);
+        setFormSubmitted(true);
+        setFile({ imagePath: 'animals/', base64: '' });
+    };
+
+    const getRandomNumber = (min, max) => {
+        return Math.floor(Math.random() * (max - min + 1) + min);
     };
 
     return (
@@ -97,7 +153,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                     onChangeText={setName}
                 />
                 <Text>Fotos do animal</Text>
-                <AddPhoto></AddPhoto>
+                <AddPhoto onValueChange={handleImageChange} formSubmitted={formSubmitted} />
                 <RadioButton.Group onValueChange={specie => setSpecie(specie)} value={specie}>
                     <Text>Espécie</Text>
                     <View style={styles.row}>
@@ -129,12 +185,12 @@ const AnimalRegisterScreen = ({ navigation }) => {
                     </View>
                 </RadioButton.Group>
                 <Text>Temperamento</Text>
-                <View style={styles.row}>
+                <View style={styles.row1}>
                     <Checkbox.Item
                         label='Brincalhão'
                         status={checked1 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setTemperance(oldArray => [...oldArray, 'Brincalhão']), 
+                            setTemperance(oldArray => oldArray? [...oldArray, 'Brincalhão'] : null), 
                             setChecked1(!checked1)
                         }}
                         style={styles.margin}
@@ -143,7 +199,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Tímido'
                         status={checked2 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setTemperance(oldArray => [...oldArray, 'Tímido']), 
+                            setTemperance(oldArray => oldArray ? [...oldArray, 'Tímido'] : null), 
                             setChecked2(!checked2)
                         }}
                     />
@@ -151,7 +207,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Calmo'
                         status={checked3 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setTemperance(oldArray => [...oldArray, 'Calmo']), 
+                            setTemperance(oldArray => oldArray ? [...oldArray, 'Calmo'] : null), 
                             setChecked3(!checked3)
                         }}
                     />
@@ -161,7 +217,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Guarda'
                         status={checked4 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setGuard(oldArray => [...oldArray, 'Guarda']), 
+                            setGuard(oldArray => oldArray ? [...oldArray, 'Guarda'] : null), 
                             setChecked4(!checked4)
                         }}
                         style={styles.margin}
@@ -170,7 +226,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Amoroso'
                         status={checked5 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setGuard(oldArray => [...oldArray, 'Amoroso']), 
+                            setGuard(oldArray => oldArray ? [...oldArray, 'Amoroso'] : null), 
                             setChecked5(!checked5)
                         }}
                     />
@@ -178,7 +234,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Preguiçoso'
                         status={checked6 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setGuard(oldArray => [...oldArray, 'Preguiçoso']), 
+                            setGuard(oldArray => oldArray ? [...oldArray, 'Preguiçoso'] : null), 
                             setChecked6(!checked6)
                         }}
                     />
@@ -189,7 +245,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Vacinado'
                         status={checked7 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setHealth(oldArray => [...oldArray, 'Vacinado']), 
+                            setHealth(oldArray => oldArray ? [...oldArray, 'Vacinado'] : null), 
                             setChecked7(!checked7)
                         }}
                         style={styles.margin}
@@ -198,7 +254,7 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Vermifugado'
                         status={checked8 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setHealth(oldArray => [...oldArray, 'Vermifugado']), 
+                            setHealth(oldArray =>  oldArray ? [...oldArray, 'Vermifugado'] : null), 
                             setChecked8(!checked8)
                         }}
                     />
@@ -208,14 +264,14 @@ const AnimalRegisterScreen = ({ navigation }) => {
                         label='Castrado'
                         status={checked9 ? 'checked' : 'unchecked'}
                         onPress={() => {
-                            setHealth(oldArray => [...oldArray, 'Castrado']), 
+                            setHealth(oldArray => oldArray ? [...oldArray, 'Castrado'] : null), 
                             setChecked9(!checked9)
                         }}
                     />
                     <Checkbox.Item
                         label='Doente'
                         status={checked10 ? 'checked' : 'unchecked'}
-                        onPress={() => {setHealth(oldArray => [...oldArray, 'Doente']), setChecked10(!checked10)}}
+                        onPress={() => {setHealth(oldArray => oldArray ? [...oldArray, 'Doente'] : null), setChecked10(!checked10)}}
                     />
                 </View>
                 <Text>Doenças do animal</Text>
